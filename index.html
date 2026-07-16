@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Packs Muscle Shirt – CLASSIC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="cart.css">
+<style>
+  :root{
+    --black:#111111;
+    --white:#ffffff;
+    --gray-50:#f6f6f6;
+    --gray-200:#e4e4e4;
+    --gray-400:#9a9a9a;
+    --gray-600:#5c5c5c;
+    --accent:#c81e1e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Montserrat',Arial,sans-serif;
+    color:var(--black);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img{display:block;max-width:100%;}
+  svg{display:block;}
+
+  /* ===== topo de avisos ===== */
+  .announce{
+    background:var(--black);
+    color:var(--white);
+    display:flex;
+    justify-content:center;
+    gap:48px;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:9px 16px;
+    flex-wrap:wrap;
+    font-weight:500;
+  }
+
+  /* ===== header ===== */
+  header{
+    border-bottom:1px solid var(--gray-200);
+    position:sticky;
+    top:0;
+    background:var(--white);
+    z-index:50;
+  }
+  .header-inner{
+    max-width:1280px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+  }
+
+  /* espaço reservado para a logo do cliente */
+  .logo-slot{
+    width:150px;
+    height:46px;
+    border:1px dashed var(--gray-400);
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--gray-400);
+    font-weight:600;
+    /* Troque este bloco por: <img src="sua-logo.png" alt="Logo" style="height:100%"> */
+  }
+
+  nav.main-nav ul{
+    display:flex;
+    gap:32px;
+    font-size:13px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .nav-disabled{
+    color:var(--gray-400);
+    cursor:not-allowed;
+    pointer-events:none;
+    user-select:none;
+  }
+  .header-actions{
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
+  .icon-btn{
+    background:none;
+    border:none;
+    cursor:not-allowed;
+    color:var(--gray-400);
+    display:flex;
+    align-items:center;
+    pointer-events:none;
+  }
+  .icon-btn svg{width:19px;height:19px;stroke:var(--gray-400);}
+  .login-disabled{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--gray-400);
+    cursor:not-allowed;
+    pointer-events:none;
+  }
+  .burger{
+    display:none;
+    background:none;
+    border:none;
+    cursor:not-allowed;
+    color:var(--gray-400);
+    pointer-events:none;
+  }
+  .burger svg{width:22px;height:22px;}
+
+  @media(max-width:900px){
+    nav.main-nav{display:none;}
+    .burger{display:block;}
+  }
+
+  /* ===== breadcrumb / título coleção ===== */
+  .collection-head{
+    max-width:1280px;
+    margin:32px auto 0;
+    padding:0 24px;
+  }
+  .collection-head h1{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+
+  /* ===== barra de ordenar/filtrar ===== */
+  .toolbar{
+    max-width:1280px;
+    margin:20px auto 0;
+    padding:0 24px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--gray-200);
+  }
+  .toolbar-left, .toolbar-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    font-size:13px;
+  }
+  .select-fake{
+    border:1px solid var(--gray-200);
+    padding:9px 14px;
+    border-radius:2px;
+    font-size:13px;
+    font-weight:500;
+    background:var(--white);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .count{color:var(--gray-600);font-size:13px;font-weight:500;}
+
+  /* ===== grid de produtos ===== */
+  .grid{
+    max-width:1280px;
+    margin:0 auto;
+    padding:32px 24px 60px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:32px 20px;
+  }
+  @media(max-width:1024px){ .grid{grid-template-columns:repeat(3,1fr);} }
+  @media(max-width:700px){ .grid{grid-template-columns:repeat(2,1fr);gap:24px 12px;} }
+
+  .card{position:relative;}
+  .card-media{
+    position:relative;
+    aspect-ratio:533/700;
+    overflow:hidden;
+    background:var(--gray-50);
+  }
+  .card-media img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:opacity .35s ease;
+  }
+  .card-media .img-hover{opacity:0;}
+  .card:hover .img-hover{opacity:1;}
+  .card:hover .img-base{opacity:0;}
+
+  .badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--accent);
+    color:var(--white);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:2px;
+    z-index:2;
+  }
+  .badge.sold-out{background:var(--gray-600);}
+  .card-title{
+    margin-top:14px;
+    font-size:13.5px;
+    font-weight:600;
+    line-height:1.35;
+  }
+  .card-title a:hover{text-decoration:underline;}
+  .price-row{
+    margin-top:6px;
+    font-size:13px;
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    flex-wrap:wrap;
+    font-weight:500;
+  }
+  .price-old{
+    color:var(--gray-400);
+    text-decoration:line-through;
+  }
+  .price-new{
+    color:var(--accent);
+    font-weight:700;
+  }
+  .btn-choose{
+    margin-top:12px;
+    width:100%;
+    padding:11px 0;
+    background:var(--black);
+    color:var(--white);
+    border:none;
+    font-size:12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-weight:700;
+    font-family:'Montserrat',Arial,sans-serif;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .card:hover .btn-choose{opacity:1;transform:translateY(0);}
+  @media(max-width:700px){
+    .btn-choose{opacity:1;transform:none;position:static;margin-top:10px;padding:9px 0;}
+  }
+
+  /* ===== paginação ===== */
+  .pagination{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    padding:0 0 70px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .pagination a, .pagination span{
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:2px;
+  }
+  .pagination a:hover{background:var(--gray-50);}
+  .pagination .active{
+    background:var(--black);
+    color:var(--white);
+  }
+
+  /* ===== footer ===== */
+  footer{
+    background:var(--gray-50);
+    padding:56px 24px 28px;
+    border-top:1px solid var(--gray-200);
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    gap:40px;
+  }
+  @media(max-width:800px){ .footer-inner{grid-template-columns:1fr;} }
+  .footer-inner h3{
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:.08em;
+    margin-bottom:14px;
+  }
+  .footer-inner p{
+    font-size:13px;
+    color:var(--gray-600);
+    line-height:1.7;
+    font-weight:500;
+  }
+  .footer-links h4{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-bottom:14px;
+  }
+  .footer-links li{margin-bottom:10px;font-size:13px;font-weight:500;}
+  .footer-links li a{color:var(--gray-400);cursor:not-allowed;pointer-events:none;}
+  .newsletter form{
+    display:flex;
+    margin-top:12px;
+    border:1px solid var(--black);
+  }
+  .newsletter input{
+    flex:1;
+    border:none;
+    padding:11px 12px;
+    font-size:13px;
+    background:transparent;
+    font-family:'Montserrat',Arial,sans-serif;
+  }
+  .newsletter button{
+    background:var(--black);
+    color:var(--white);
+    border:none;
+    padding:0 18px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:'Montserrat',Arial,sans-serif;
+  }
+  /* ===== modal escolher opções ===== */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(17,17,17,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:200;
+    padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:var(--white);
+    width:100%;
+    max-width:760px;
+    max-height:88vh;
+    overflow-y:auto;
+    border-radius:4px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    position:relative;
+  }
+  @media(max-width:640px){ .modal-box{grid-template-columns:1fr;} }
+  .modal-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:2;
+  }
+  .modal-close svg{width:16px;height:16px;}
+  .modal-media{
+    background:var(--gray-50);
+    aspect-ratio:533/600;
+  }
+  .modal-media img{width:100%;height:100%;object-fit:cover;}
+  .modal-info{
+    padding:32px 28px;
+    display:flex;
+    flex-direction:column;
+  }
+  .modal-info h2{
+    font-size:19px;
+    font-weight:700;
+    line-height:1.3;
+    padding-right:26px;
+  }
+  .modal-price{
+    margin-top:10px;
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    font-size:15px;
+    font-weight:600;
+  }
+  .modal-composition{
+    margin-top:16px;
+    font-size:12.5px;
+    color:var(--gray-600);
+    line-height:1.6;
+    font-weight:500;
+  }
+  .modal-label{
+    margin-top:22px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    display:flex;
+    justify-content:space-between;
+  }
+  .modal-label .size-selected{color:var(--gray-600);font-weight:600;text-transform:none;letter-spacing:0;}
+  .size-grid{
+    margin-top:10px;
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+  }
+  @media(max-width:480px){ .size-grid{grid-template-columns:repeat(4,1fr);} }
+  .size-btn{
+    border:1px solid var(--gray-200);
+    background:var(--white);
+    padding:10px 0;
+    font-size:12px;
+    font-weight:600;
+    font-family:'Montserrat',Arial,sans-serif;
+    cursor:pointer;
+    border-radius:2px;
+  }
+  .size-btn:hover{border-color:var(--black);}
+  .size-btn.selected{background:var(--black);color:var(--white);border-color:var(--black);}
+  .size-btn.unavailable{
+    color:var(--gray-400);
+    text-decoration:line-through;
+    cursor:not-allowed;
+    background:var(--gray-50);
+  }
+  .qty-row{
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .qty-stepper{
+    display:flex;
+    align-items:center;
+    border:1px solid var(--gray-200);
+    border-radius:2px;
+  }
+  .qty-stepper button{
+    width:34px;
+    height:36px;
+    background:none;
+    border:none;
+    font-size:15px;
+    cursor:pointer;
+    font-family:'Montserrat',Arial,sans-serif;
+  }
+  .qty-stepper span{
+    width:34px;
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+  }
+  .modal-add{
+    margin-top:26px;
+    width:100%;
+    padding:14px 0;
+    background:var(--black);
+    color:var(--white);
+    border:none;
+    font-size:13px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    font-weight:700;
+    font-family:'Montserrat',Arial,sans-serif;
+    cursor:pointer;
+    border-radius:2px;
+  }
+  .modal-add:disabled{background:var(--gray-400);cursor:not-allowed;}
+  .modal-note{
+    margin-top:12px;
+    font-size:11.5px;
+    color:var(--gray-600);
+    text-align:center;
+    min-height:16px;
+    font-weight:600;
+  }
+
+  .footer-bottom{
+    max-width:1280px;
+    margin:40px auto 0;
+    padding-top:20px;
+    border-top:1px solid var(--gray-200);
+    font-size:12px;
+    color:var(--gray-400);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    font-weight:500;
+  }
+</style>
+</head>
+<body>
+
+  <div class="announce">
+    <span>PRODUÇÃO E ENVIO NACIONAL</span>
+    <span>COMPRE PACKS E GANHE DESCONTO PROGRESSIVO</span>
+  </div>
+
+  <header>
+    <div class="header-inner">
+      <button class="burger" aria-label="Menu" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <!-- Espaço reservado para a logo: troque por <img src="sua-logo.png" alt="Logo"> -->
+      <div class="logo-slot">SUA LOGO</div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><span class="nav-disabled">Inicio</span></li>
+          <li><span class="nav-disabled">Muscle Shirt</span></li>
+          <li><span class="nav-disabled">Packs Muscle Shirt</span></li>
+          <li><span class="nav-disabled">Polos</span></li>
+          <li><span class="nav-disabled">Meias &amp; Cuecas</span></li>
+          <li><span class="nav-disabled">Rastrear pedido</span></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Pesquisar" aria-disabled="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <span class="login-disabled">Entrar</span>
+        <button class="icon-btn cart-btn" aria-label="Carrinho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="collection-head">
+    <h1>Packs Muscle Shirt</h1>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="select-fake">Filtrar</div>
+    </div>
+    <div class="toolbar-right">
+      <span class="count" id="productCount">39 produtos</span>
+      <div class="select-fake">Em destaque</div>
+    </div>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <div class="pagination" id="pagination"></div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="about">
+        <h3>CLASSIC</h3>
+        <p>
+          Rua Hermínio Stringari, 1407 - Guaramirim / SC<br>
+          CNPJ: 52.904.748/0001-12<br><br>
+          Fale conosco<br>
+          E-mail: contato@classicmens.com.br<br>
+          WhatsApp: (47) 99268-4059<br>
+          Comercial: (47) 99786-9271
+        </p>
+      </div>
+      <div class="footer-links">
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#" aria-disabled="true">Pagamento seguro</a></li>
+          <li><a href="#" aria-disabled="true">Política de frete</a></li>
+          <li><a href="#" aria-disabled="true">Política de troca e reembolso</a></li>
+          <li><a href="#" aria-disabled="true">Por que comprar na Classic?</a></li>
+          <li><a href="#" aria-disabled="true">Política de privacidade</a></li>
+          <li><a href="#" aria-disabled="true">Termos de serviço</a></li>
+        </ul>
+      </div>
+      <div class="newsletter">
+        <h4 style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Receba promoções exclusivas</h4>
+        <form onsubmit="return false;">
+          <input type="email" placeholder="E-mail" required>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026, CLASSIC</span>
+      <span>Com tecnologia da Shopify</span>
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="modal-media"><img id="modalImg" src="" alt=""></div>
+      <div class="modal-info">
+        <h2 id="modalTitle"></h2>
+        <div class="modal-price">
+          <span class="price-old" id="modalOld"></span>
+          <span class="price-new" id="modalNew"></span>
+        </div>
+        <p class="modal-composition" id="modalComposition"></p>
+
+        <div class="modal-label"><span>Tamanho</span><span class="size-selected" id="sizeSelectedLabel">selecione</span></div>
+        <div class="size-grid" id="sizeGrid"></div>
+
+        <div class="qty-row">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">Quantidade</span>
+          <div class="qty-stepper">
+            <button type="button" id="qtyMinus">-</button>
+            <span id="qtyValue">1</span>
+            <button type="button" id="qtyPlus">+</button>
+          </div>
+        </div>
+
+        <button class="modal-add" id="modalAdd">Adicionar ao carrinho</button>
+        <p class="modal-note" id="modalNote"></p>
+      </div>
+    </div>
+  </div>
+
+<script>
+const pageProducts = {
+  1: [
+    {t:"Pack Metal | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_metal_3c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack All Black | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_All_Black_3_Classic_s_09906133-dde4-4088-9e2a-e6332f89253b.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_712.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Shadow | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Shadow_3_Classic_s_d61c78e3-2519-4f64-b5a2-aa0c010535bd.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_4_0_5x_ec3fff0b-3fff-44b6-9eb7-e1d7e7363bf5.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Califórnia | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_California_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Nocturne | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Nocturne_3_Classic_s_8761e639-57e4-451f-a119-931aceb33216.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1edits2.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Routine | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_routine_5c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_7_copiar_22cd3b5f-b2b2-4c9b-a8d0-59bd6e264257.jpg?width=533", old:"498,50", now:"299,10", promo:true},
+    {t:"Pack All Day | 7 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_all_day_7c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/TANTO-FAZ_9843b928-370f-48be-a36d-cae491789d73.jpg?width=533", old:"697,90", now:"398,70", promo:true},
+    {t:"Pack Overnight | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_overnight_3c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_5_copiar_7dc197d5-53b0-455c-8159-b16b5699de87.jpg?width=533", old:"299,10", now:"199,40", promo:false, soldOut:true},
+    {t:"Pack Sand | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Sand_3_Classic_s_41a8bb6f-22e0-4c78-9dc0-dc5482342375.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_212.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Obscure | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Obscure_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1news.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Dominance | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Dominance_3_Classic_s_fbf2a7bc-8ebb-4186-895f-4565956cf443.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1news.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Titan | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Titan_5_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1edits2.jpg?width=533", old:"498,50", now:"299,10", promo:true},
+    {t:"Pack Casual | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_casual_3c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_4_copiar_818238d3-0753-4318-a056-b02d52767641.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Forest | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Forest_3_Classic_s_CERT.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_5_0_5x_676aa0a1-290d-4f33-b788-ae49c29064d6.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack All White | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_All_White_3_Classic_s_1510e487-84c5-4b83-8af8-71b0e9694bf9.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"299,10", now:"199,40", promo:true},
+    {t:"Pack Elite | 7 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Elite7_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1news.jpg?width=533", old:"697,90", now:"398,70", promo:true}
+  ],
+  2: [
+    {t:"Pack All Black | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/ALL_BLACK_5_CLASSICS_4b130178-9dd6-4539-b8dc-a0cde33b8d9c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_4_copiar_125c74e1-c60a-45ae-814e-717b52cbb429.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Nightfall | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Noite_Elegancia_Nightfall_Elegance_5c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Pine | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Pine_3_Classic_s_6c522339-ed01-45be-8ada-4300d586f1aa.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1edits2.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Sentinel | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Sentinel_3_Classic_s_753893d2-a55c-4d42-807b-fb2478598371.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Full Week | 7 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/ChatGPTImage28deabr.de2026_10_18_57.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_6_copiar_6c6d6cc9-09bc-4877-828c-ac2d6fc36fe7.jpg?width=533", old:"379,80", now:"438,80", promo:false},
+    {t:"Pack Urban | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Urban_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/TANTO-FAZ_0_5x_71e77fbe-76e0-491f-b001-897673294295.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Brave | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Brave_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_5_0_5x_676aa0a1-290d-4f33-b788-ae49c29064d6.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Duotone | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/3PRETA_2BRANCA_5c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_112.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Harmony | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/pack_harmony_3c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_6_copiar_6c6d6cc9-09bc-4877-828c-ac2d6fc36fe7.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Hunter | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Hunter_3_Classic_s_c8205e49-20db-428b-ab66-f68986283e9f.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1news.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack All Black | 7 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/all_black_7.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_512.jpg?width=533", old:"697,90", now:"438,80", promo:true},
+    {t:"Pack Neutrals | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Neutros_Essenciais_Essential_Neutrals_5c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_4_copiar_125c74e1-c60a-45ae-814e-717b52cbb429.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Tactical | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Tactical_3_Classic_s_d3e12a81-2c5d-4592-bb2e-84775aa7177e.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1edits2.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Relax | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Relax_3_Classic_s_deffccce-f7d2-47cc-9fc0-b79404ca2b80.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_1_copiarcaqui-marinh_398a76eb-986b-4a65-bb0c-5e1a5ec54550.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Selva | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Selva_3_Classic_s_db6a18d3-f6d3-4422-8371-aea8c7e4dc9c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_512.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Hype | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Hype_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_6_be0acd88-9fa1-420a-813f-aeadeb9ff7cf.jpg?width=533", old:"299,10", now:"219,40", promo:true}
+  ],
+  3: [
+    {t:"Pack Midnight | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Classicos_Navy_Navy_Core_Classics_5c_b050655e-ad7e-4c93-b13e-5a2661cd966e.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_4s.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Pulse | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/1_8741ba39-81e8-4e49-8248-ac5a2faacbf7.jpg?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_512.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Malibu | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Malibu_3_Classic_s.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_2s.jpg?width=533", old:"299,10", now:"219,40", promo:true},
+    {t:"Pack Twist | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/P_B_com_Destaque_Black_White_with_a_Pop_5c.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_2news.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack All White | 5 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_All_White_5_Classic_s_26eceb90-91ce-40a9-aa2c-b4300f5b6af0.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_312.jpg?width=533", old:"498,50", now:"329,10", promo:true},
+    {t:"Pack Energy | 3 Muscle Shirts", i1:"https://classicbr.com/cdn/shop/files/Pack_Energy_3_Classic_s_61d3c310-d562-4945-a5c9-abc4c364bba1.png?width=533", i2:"https://classicbr.com/cdn/shop/files/Prancheta_5_0_5x_676aa0a1-290d-4f33-b788-ae49c29064d6.jpg?width=533", old:"299,10", now:"219,40", promo:true}
+  ]
+};
+
+const TOTAL_PAGES = 3;
+let currentPage = 1;
+let products = [];
+
+const grid = document.getElementById('grid');
+const paginationEl = document.getElementById('pagination');
+
+function renderPagination(){
+  let html = `<a href="#" onclick="goToPage(${Math.max(1,currentPage-1)});return false;">&#8592;</a>`;
+  for(let i=1;i<=TOTAL_PAGES;i++){
+    html += i===currentPage
+      ? `<span class="active">${i}</span>`
+      : `<a href="#" onclick="goToPage(${i});return false;">${i}</a>`;
+  }
+  html += `<a href="#" onclick="goToPage(${Math.min(TOTAL_PAGES,currentPage+1)});return false;">&#8594;</a>`;
+  paginationEl.innerHTML = html;
+}
+
+function renderGrid(){
+  grid.innerHTML = products.map((p,idx) => `
+    <div class="card">
+      <div class="card-media">
+        ${p.soldOut ? '<span class="badge sold-out">Esgotado</span>' : (p.promo ? '<span class="badge">Promoção</span>' : '')}
+        <img class="img-base" src="${p.i1}" alt="${p.t}" loading="lazy">
+        <img class="img-hover" src="${p.i2}" alt="" loading="lazy">
+      </div>
+      <div class="card-title"><a href="#" aria-disabled="true">${p.t}</a></div>
+      <div class="price-row">
+        <span class="price-old">R$ ${p.old}</span>
+        <span class="price-new">R$ ${p.now}</span>
+      </div>
+      <button class="btn-choose" onclick="openOptions(${idx})" ${p.soldOut ? 'disabled style="opacity:.5;cursor:not-allowed;"' : ''}>${p.soldOut ? 'Esgotado' : 'Escolher opções'}</button>
+    </div>
+  `).join('');
+}
+
+function goToPage(n){
+  if(n < 1 || n > TOTAL_PAGES) return;
+  currentPage = n;
+  products = pageProducts[currentPage];
+  document.getElementById('productCount').textContent =
+    (currentPage===1 ? 39 : 38) + ' produtos';
+  renderGrid();
+  renderPagination();
+  window.scrollTo({top: document.querySelector('.collection-head').offsetTop - 90, behavior:'smooth'});
+}
+
+/* ===== composição sugerida por tamanho de pack (a partir do título) ===== */
+function packComposition(title){
+  const m = title.match(/(\d+)\s*(Muscle Shirts|Classic)/i);
+  const n = m ? parseInt(m[1]) : 3;
+  return `Kit com ${n} camisetas premium em composição sortida de cores. Tecido 96% algodão penteado (30.1) e 4% elastano — alta durabilidade, sem bolinhas e sem necessidade de passar.`;
+}
+
+const SIZES = ["P","M","G","GG","G1","G2","G3"];
+
+/* ===== estado do modal ===== */
+let currentProduct = null;
+let currentSize = null;
+let currentQty = 1;
+
+const overlay = document.getElementById('modalOverlay');
+const sizeGrid = document.getElementById('sizeGrid');
+
+function openOptions(idx){
+  currentProduct = products[idx];
+  currentSize = null;
+  currentQty = 1;
+
+  document.getElementById('modalImg').src = currentProduct.i1;
+  document.getElementById('modalImg').alt = currentProduct.t;
+  document.getElementById('modalTitle').textContent = currentProduct.t;
+  document.getElementById('modalOld').textContent = 'R$ ' + currentProduct.old;
+  document.getElementById('modalNew').textContent = 'R$ ' + currentProduct.now;
+  document.getElementById('modalComposition').textContent = packComposition(currentProduct.t);
+  document.getElementById('qtyValue').textContent = '1';
+  document.getElementById('modalNote').textContent = '';
+  document.getElementById('sizeSelectedLabel').textContent = 'selecione';
+
+  const seed = currentProduct.t.length % SIZES.length;
+  sizeGrid.innerHTML = SIZES.map((s,i) => {
+    const unavailable = (i === seed);
+    return `<button type="button" class="size-btn${unavailable ? ' unavailable' : ''}" data-size="${s}" ${unavailable ? 'disabled' : ''} onclick="selectSize('${s}')">${s}</button>`;
+  }).join('');
+
+  const addBtn = document.getElementById('modalAdd');
+  addBtn.disabled = true;
+  addBtn.textContent = 'Selecione um tamanho';
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectSize(s){
+  currentSize = s;
+  document.getElementById('sizeSelectedLabel').textContent = s;
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('selected', b.dataset.size === s));
+  const addBtn = document.getElementById('modalAdd');
+  addBtn.disabled = false;
+  addBtn.textContent = 'Adicionar ao carrinho';
+  document.getElementById('modalNote').textContent = '';
+}
+
+function closeOptions(){
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeOptions);
+overlay.addEventListener('click', e => { if(e.target === overlay) closeOptions(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeOptions(); });
+
+document.getElementById('qtyMinus').addEventListener('click', () => {
+  currentQty = Math.max(1, currentQty - 1);
+  document.getElementById('qtyValue').textContent = currentQty;
+});
+document.getElementById('qtyPlus').addEventListener('click', () => {
+  currentQty = Math.min(10, currentQty + 1);
+  document.getElementById('qtyValue').textContent = currentQty;
+});
+
+function slugify(str){
+  return str.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+document.getElementById('modalAdd').addEventListener('click', () => {
+  if(!currentSize) return;
+  const note = document.getElementById('modalNote');
+  note.textContent = `Adicionado: ${currentQty}x tamanho ${currentSize} — ${currentProduct.t}`;
+
+  window.ClassicCart.addToCartWithFeedback({
+    id: slugify(currentProduct.t),
+    title: currentProduct.t,
+    image: currentProduct.i1,
+    price: window.ClassicCart.parsePrice(currentProduct.now),
+    size: currentSize,
+    qty: currentQty
+  });
+
+  setTimeout(closeOptions, 900);
+});
+
+/* inicializa na página 1 */
+goToPage(1);
+</script>
+<script src="cart.js"></script>
+
+</body>
+</html>

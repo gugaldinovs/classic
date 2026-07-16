@@ -1,0 +1,210 @@
+/* ===================================================================
+   CLASSIC — estilos compartilhados de carrinho / drawer / checkout
+   Usa os mesmos tokens visuais do index.html (Montserrat, preto/branco,
+   vermelho de destaque). Incluir em qualquer página após o <style> local.
+=================================================================== */
+
+:root{
+  --black:#111111;
+  --white:#ffffff;
+  --gray-50:#f6f6f6;
+  --gray-100:#efefef;
+  --gray-200:#e4e4e4;
+  --gray-400:#9a9a9a;
+  --gray-600:#5c5c5c;
+  --accent:#c81e1e;
+  --green-ok:#1e7d3a;
+}
+
+/* ---------- badge do carrinho no header ---------- */
+.cart-btn{position:relative;}
+.cart-btn.icon-btn{cursor:pointer;pointer-events:auto;color:var(--black);}
+.cart-btn.icon-btn svg{stroke:var(--black);}
+.cart-count-badge{
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  background:var(--accent);
+  color:var(--white);
+  font-size:10px;
+  font-weight:700;
+  min-width:16px;
+  height:16px;
+  padding:0 4px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+  font-family:'Montserrat',Arial,sans-serif;
+  transform:scale(0);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.cart-count-badge.show{transform:scale(1);}
+.cart-count-badge.bump{animation:cartBump .35s ease;}
+@keyframes cartBump{
+  0%{transform:scale(1);}
+  40%{transform:scale(1.4);}
+  100%{transform:scale(1);}
+}
+
+/* ---------- overlay + drawer ---------- */
+.cd-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,17,17,.5);
+  z-index:300;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease;
+}
+.cd-overlay.open{opacity:1;pointer-events:auto;}
+
+.cd-drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  height:100%;
+  width:100%;
+  max-width:420px;
+  background:var(--white);
+  z-index:301;
+  display:flex;
+  flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .32s cubic-bezier(.2,.8,.2,1);
+  box-shadow:-8px 0 30px rgba(0,0,0,.15);
+}
+.cd-drawer.open{transform:translateX(0);}
+
+.cd-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 22px;
+  border-bottom:1px solid var(--gray-200);
+}
+.cd-head span{
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.cd-close{
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+}
+.cd-close svg{width:16px;height:16px;}
+
+.cd-flash{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#f0f8f2;
+  color:var(--green-ok);
+  font-size:12.5px;
+  font-weight:700;
+  padding:0 22px;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height .3s ease, opacity .25s ease, padding .3s ease;
+}
+.cd-flash.show{max-height:54px;opacity:1;padding:12px 22px;}
+.cd-flash svg{width:16px;height:16px;flex-shrink:0;stroke:var(--green-ok);}
+.cd-flash .fp-check{
+  animation:popCheck .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popCheck{
+  0%{transform:scale(0);}
+  70%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+.cd-body{flex:1;overflow-y:auto;padding:6px 22px 0;}
+.cd-empty{
+  padding:60px 0;
+  text-align:center;
+  color:var(--gray-600);
+  font-size:13px;
+  font-weight:500;
+}
+.cd-item{
+  display:flex;
+  gap:12px;
+  padding:16px 0;
+  border-bottom:1px solid var(--gray-100);
+  position:relative;
+}
+.cd-item img{
+  width:64px;height:78px;object-fit:cover;background:var(--gray-50);flex-shrink:0;
+}
+.cd-item-info{flex:1;min-width:0;}
+.cd-item-info .t{font-size:12.5px;font-weight:700;line-height:1.3;}
+.cd-item-info .meta{font-size:11px;color:var(--gray-600);margin-top:4px;font-weight:500;}
+.cd-item-info .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.cd-item-info .price{font-size:12.5px;font-weight:700;}
+.cd-qty{
+  display:flex;align-items:center;border:1px solid var(--gray-200);border-radius:2px;
+}
+.cd-qty button{
+  width:24px;height:24px;background:none;border:none;cursor:pointer;font-size:13px;
+  font-family:'Montserrat',Arial,sans-serif;
+}
+.cd-qty span{width:22px;text-align:center;font-size:11.5px;font-weight:700;}
+.cd-remove{
+  position:absolute;top:16px;right:0;background:none;border:none;cursor:pointer;
+  color:var(--gray-400);font-size:11px;text-decoration:underline;font-weight:600;
+  font-family:'Montserrat',Arial,sans-serif;
+}
+.cd-remove:hover{color:var(--accent);}
+
+.cd-bump{
+  border-top:1px dashed var(--gray-200);
+  margin-top:6px;
+  padding:16px 0 4px;
+}
+.cd-bump h4{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--gray-600);
+  margin-bottom:10px;
+}
+.cd-bump-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cd-bump-item{border:1px solid var(--gray-200);border-radius:3px;padding:10px;text-align:center;}
+.cd-bump-item img{width:100%;height:70px;object-fit:cover;background:var(--gray-50);margin:0 auto 8px;}
+.cd-bump-item .t{font-size:10.5px;font-weight:700;line-height:1.25;min-height:26px;}
+.cd-bump-item .p{font-size:11.5px;font-weight:800;color:var(--accent);margin:4px 0 8px;}
+.cd-bump-item button{
+  width:100%;padding:7px 0;background:var(--black);color:var(--white);border:none;
+  font-size:10px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;
+  font-family:'Montserrat',Arial,sans-serif;cursor:pointer;border-radius:2px;
+}
+.cd-bump-item button:disabled{background:var(--gray-400);cursor:default;}
+
+.cd-footer{
+  border-top:1px solid var(--gray-200);
+  padding:16px 22px 22px;
+}
+.cd-subtotal{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13px;font-weight:700;margin-bottom:14px;
+}
+.cd-subtotal span:last-child{font-size:16px;}
+.cd-footer .cd-note{font-size:10.5px;color:var(--gray-600);text-align:center;margin-bottom:10px;font-weight:500;}
+.cd-btn-primary, .cd-btn-secondary{
+  display:block;width:100%;text-align:center;padding:13px 0;font-size:12.5px;
+  letter-spacing:.05em;text-transform:uppercase;font-weight:700;border-radius:2px;
+  font-family:'Montserrat',Arial,sans-serif;cursor:pointer;
+}
+.cd-btn-primary{background:var(--black);color:var(--white);border:none;margin-bottom:10px;}
+.cd-btn-secondary{background:var(--white);color:var(--black);border:1px solid var(--black);}
+
+@media(max-width:480px){
+  .cd-drawer{max-width:100%;}
+}
